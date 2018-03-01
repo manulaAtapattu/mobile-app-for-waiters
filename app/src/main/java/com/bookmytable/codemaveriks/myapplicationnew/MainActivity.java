@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText Email;
@@ -22,14 +26,19 @@ public class MainActivity extends AppCompatActivity {
     private TextView Info;
     private Button Login;
     private int counter=5;
+    private FirebaseAnalytics mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
+//        Firebase.setAndroidContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference mRef = database.getReference("name");
+        mRef.setValue("manula");
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -39,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        mRef = new FireBase(https://bookmytable-cc20f.firebaseio.com/);
+//        mRef = FirebaseAnalytics.getInstance(this);
         Email = (EditText)findViewById(R.id.etEmail);
         Password = (EditText)findViewById(R.id.etPassword);
         Info = (TextView) findViewById(R.id.tvInfo);

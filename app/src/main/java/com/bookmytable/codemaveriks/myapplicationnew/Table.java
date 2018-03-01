@@ -5,5 +5,5 @@ import java.util.List;
 
 public class Table {
     private String TableName;
-    private List<MealOrder> orders;
+    private List<MealOrder> TableOrder;
 }
