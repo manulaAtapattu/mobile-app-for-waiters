@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText Name;
+    private EditText Email;
     private EditText Password;
     private TextView Info;
     private Button Login;
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Name = (EditText)findViewById(R.id.etName);
-        Password = (EditText)findViewById(R.id.etName);
+        Email = (EditText)findViewById(R.id.etEmail);
+        Password = (EditText)findViewById(R.id.etPassword);
         Info = (TextView) findViewById(R.id.tvInfo);
         Login = (Button) findViewById(R.id.btnLogin);
         Log.d("myTag","here1");
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 //            System.out.println("here");
             @Override
             public void onClick(View v) {
-                validate(Name.getText().toString(),Password.getText().toString());
+                validate(Email.getText().toString(),Password.getText().toString());
             }
         });
     }
@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void validate (String UserName, String UserPassword){
+    private void validate (String UserEmail, String UserPassword){
         Log.d("myTag","here1");
 
-        if ((UserName.equals("Admin")) && (UserPassword.equals("1234"))){
+        if (UserEmail.equals("Admin") && UserPassword.equals("1234")){
             Log.d("myTag","here2");
             Intent intent = new Intent(MainActivity.this, secondActivity.class);
             startActivity(intent);
