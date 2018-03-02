@@ -16,8 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,30 +29,38 @@ public class MainActivity extends AppCompatActivity {
     private TextView Info;
     private Button Login;
     private int counter=5;
-    private FirebaseAnalytics mRef;
+//    private DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
-//        Firebase.setAndroidContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //code to connect to database, assign myRef to Reference 'message2'
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference mRef = database.getReference("name");
-        mRef.setValue("manula");
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        DatabaseReference myRef = database.getReference("message2");
 
-//        mRef = new FireBase(https://bookmytable-cc20f.firebaseio.com/);
-//        mRef = FirebaseAnalytics.getInstance(this);
+        //code to set value ot database
+//        myRef.child("users").child("name").setValue("Manula");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // code to get value from firebase database
+                String childValue =String.valueOf(dataSnapshot.getValue());
+                Info.setText(childValue);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         Email = (EditText)findViewById(R.id.etEmail);
         Password = (EditText)findViewById(R.id.etPassword);
         Info = (TextView) findViewById(R.id.tvInfo);
@@ -96,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             counter--;
-            Info.setText("No of attempts remaining"+String.valueOf(counter));
+
+//            Info.setText("No of attempts remaining"+String.valueOf(counter)+);
             if (counter ==0){
                 Login.setEnabled(false);
             }
